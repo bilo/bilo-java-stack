@@ -1,0 +1,8 @@
+*.class
+.classpath
+.project
+blockstack.iml
+.settings/
+build/
+/.gradle/
+bin/

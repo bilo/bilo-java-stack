@@ -1,0 +1,42 @@
+apply plugin: 'java'
+
+sourceCompatibility = 1.7
+
+repositories {
+  jcenter()
+}
+
+dependencies {
+  testCompile 'junit:junit:4.+'
+  testCompile 'org.mockito:mockito-core:2.+'
+  testRuntime 'org.mockito:mockito-core:2.+'
+}
+
+sourceSets {
+  main {
+    java {
+      srcDir 'src'
+    }
+  }
+  test {
+    java {
+      srcDirs = ["test/unit", "test/common"] 
+    }
+  }
+  acceptanceTest {
+    java {
+      srcDirs = ["test/acceptance", "test/common", "src"] 
+    }
+  }
+}
+
+configurations {
+  acceptanceTestCompile.extendsFrom compile, testCompile
+  acceptanceTestRuntime.extendsFrom runtime, testRuntime
+}
+
+task acceptanceTest(type:Test, dependsOn: assemble) {
+  description = "run acceptance tests"
+  testClassesDir = project.sourceSets.acceptanceTest.output.classesDir
+  classpath = project.sourceSets.acceptanceTest.runtimeClasspath
+}
