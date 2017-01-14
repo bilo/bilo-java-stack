@@ -18,6 +18,7 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Matchers;
 
 import com.bloctesian.Block;
 import com.bloctesian.BlockId;
@@ -213,6 +214,22 @@ public class RequestBlockData_Test {
     streamBlocks.timeout();
 
     verify(logger).error("No response from the hardware");
+  }
+
+  @Test
+  public void log_to_debug_on_receive() {
+    streamBlocks.start();
+
+    streamBlocks.newData(list(0x00, 0x10, 0x20, 0xff));
+
+    verify(logger).debug(eq("received: 00 10 20 ff"));
+  }
+
+  @Test
+  public void log_to_debug_on_send() {
+    streamBlocks.start();
+
+    verify(logger).debug("sent: 80 01 14 81");
   }
 
   @Test

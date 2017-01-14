@@ -6,6 +6,7 @@
 package com.bloctesian.stream;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import com.bloctesian.Block;
@@ -66,6 +67,8 @@ public class StreamBlocks implements Stream, TimerCallback {
       return;
     }
 
+    logger.debug("received: " + hexString(data));
+
     for (byte symbol : data) {
       parser.receive(symbol);
     }
@@ -90,7 +93,9 @@ public class StreamBlocks implements Stream, TimerCallback {
   private void sendRequest() {
     if (parser.isFinished()) {
       timer.setTimeout(RequestTimeoutMs, this);
-      output.newData(composer.serialize());
+      List<Byte> data = composer.serialize();
+      output.newData(data);
+      logger.debug("sent: " + hexString(data));
     }
   }
 
@@ -100,6 +105,26 @@ public class StreamBlocks implements Stream, TimerCallback {
 
   public Block getBase() {
     return base;
+  }
+
+  private String hexString(Collection<Byte> data) {
+    String result = "";
+    boolean first = true;
+    for (Byte itr : data) {
+      if (first) {
+        first = false;
+      } else {
+        result += " ";
+      }
+      result += hexString(itr);
+    }
+    return result;
+  }
+
+  private String hexString(Byte value) {
+    int upper = (value >> 4) & 0x0f;
+    int lower = (value >> 0) & 0x0f;
+    return Integer.toHexString(upper) + Integer.toHexString(lower);
   }
 
 }
