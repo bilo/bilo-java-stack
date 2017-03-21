@@ -15,6 +15,7 @@ import com.bloctesian.BlockType;
 import com.bloctesian.Color;
 import com.bloctesian.Logger;
 import com.bloctesian.Rotation;
+import com.bloctesian.RotationListener;
 import com.bloctesian.Timer;
 import com.bloctesian.TimerCallback;
 import com.bloctesian.Vector;
@@ -31,6 +32,7 @@ import com.bloctesian.stream.message.serializer.Serializer;
 import com.bloctesian.stream.message.serializer.StateAwareSerializer;
 import com.bloctesian.utility.ObservableCollection;
 import com.bloctesian.utility.ObservableHashSet;
+import com.bloctesian.utility.UniqueOrderedList;
 
 public class StreamBlocks implements Stream, TimerCallback {
   static public final int RequestTimeoutMs = 1500;
@@ -47,7 +49,8 @@ public class StreamBlocks implements Stream, TimerCallback {
   private final StateAwareSerializer stateComposer = new StateAwareSerializer(receiveState, composer, errorComposer);
   private final ErrorDistributor error = new ErrorDistributor();
   private final BlockStateDistributor blockState = new BlockStateDistributor();
-  private final PartParser parser = ParserFactory.produce(blockState, error);
+  private final RotationDistributor rotationDistributor = new RotationDistributor();
+  private final PartParser parser;
 
   public StreamBlocks(Stream output, Timer timer, Logger logger) {
     this.output = output;
@@ -57,6 +60,7 @@ public class StreamBlocks implements Stream, TimerCallback {
     error.getListener().add(new ErrorTranslater(logger));
     blockState.getListener().add(receiveState);
     blockState.getListener().add(repository);
+    parser = ParserFactory.produce(blockState, rotationDistributor, error, logger);
   }
 
   public void start() {
@@ -141,6 +145,22 @@ public class StreamBlocks implements Stream, TimerCallback {
     int upper = (value >> 4) & 0x0f;
     int lower = (value >> 0) & 0x0f;
     return Integer.toHexString(upper) + Integer.toHexString(lower);
+  }
+
+  public UniqueOrderedList<RotationListener> rotationListener() {
+    return rotationDistributor.listeners;
+  }
+
+  private class RotationDistributor implements RotationListener {
+    final UniqueOrderedList<RotationListener> listeners = new UniqueOrderedList<>();
+
+    @Override
+    public void rotationChanged(double value) {
+      for (RotationListener itr : listeners) {
+        itr.rotationChanged(value);
+      }
+    }
+
   }
 
 }

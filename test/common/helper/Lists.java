@@ -96,11 +96,16 @@ public class Lists {
     return result;
   }
 
-  static public List<Byte> list(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9) {
+  static public List<Byte> list(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8) {
     List<Byte> result = list(a0, a1, a2, a3, a4, a5);
     result.add(toByte(a6));
     result.add(toByte(a7));
     result.add(toByte(a8));
+    return result;
+  }
+
+  static public List<Byte> list(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9) {
+    List<Byte> result = list(a0, a1, a2, a3, a4, a5, a6, a7, a8);
     result.add(toByte(a9));
     return result;
   }

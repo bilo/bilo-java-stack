@@ -49,4 +49,26 @@ public class ByteConvertion_Test {
     assertEquals(Byte.MIN_VALUE, ByteConvertion.toInt((byte) 0x80));
   }
 
+  @Test
+  public void can_convert_byte_to_uint() {
+    assertEquals(0, ByteConvertion.toUint((byte) 0));
+    assertEquals(1, ByteConvertion.toUint((byte) 1));
+    assertEquals(42, ByteConvertion.toUint((byte) 42));
+    assertEquals(255, ByteConvertion.toUint((byte) 0xff));
+    assertEquals(214, ByteConvertion.toUint((byte) 0xd6));
+  }
+
+  @Test
+  public void can_convert_bytes_to_short() {
+    assertEquals(0, ByteConvertion.toShort((byte) 0x00, (byte) 0x00));
+    assertEquals(1, ByteConvertion.toShort((byte) 0x00, (byte) 0x01));
+    assertEquals(255, ByteConvertion.toShort((byte) 0x00, (byte) 0xff));
+    assertEquals(256, ByteConvertion.toShort((byte) 0x01, (byte) 0x00));
+    assertEquals(32767, ByteConvertion.toShort((byte) 0x7f, (byte) 0xff));
+    assertEquals(-32768, ByteConvertion.toShort((byte) 0x80, (byte) 0x00));
+    assertEquals(-1, ByteConvertion.toShort((byte) 0xff, (byte) 0xff));
+    assertEquals(-256, ByteConvertion.toShort((byte) 0xff, (byte) 0x00));
+    assertEquals(0x7654, ByteConvertion.toShort((byte) 0x76, (byte) 0x54));
+  }
+
 }
