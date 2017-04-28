@@ -13,6 +13,9 @@ import static org.mockito.Mockito.verify;
 
 import org.junit.Test;
 
+import com.bloctesian.internal.BaseError;
+import com.bloctesian.internal.ErrorListener;
+
 public class ErrorParser_Test {
   final private ErrorListener errorListener = mock(ErrorListener.class);
   final private ErrorParser testee = new ErrorParser(errorListener);

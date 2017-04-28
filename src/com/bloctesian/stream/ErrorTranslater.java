@@ -6,8 +6,8 @@
 package com.bloctesian.stream;
 
 import com.bloctesian.Logger;
-import com.bloctesian.stream.message.parser.BaseError;
-import com.bloctesian.stream.message.parser.ErrorListener;
+import com.bloctesian.internal.BaseError;
+import com.bloctesian.internal.ErrorListener;
 
 public class ErrorTranslater implements ErrorListener {
   private final Logger listener;

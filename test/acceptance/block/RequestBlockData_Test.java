@@ -18,7 +18,6 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Matchers;
 
 import com.bloctesian.Block;
 import com.bloctesian.BlockId;
@@ -39,6 +38,7 @@ public class RequestBlockData_Test {
   private final Timer timer = mock(Timer.class);
   private final StreamBlocks streamBlocks = new StreamBlocks(output, timer, logger);
   private final List<Byte> emptyRequest = list(0x80, 0x01, 0x14, 0x81);
+  private final List<Byte> errorRecoveryRequest = list(0x80, 0x81);
   private final List<Byte> emptyResponse = list(0x80, 0x81);
 
   @Before
@@ -77,7 +77,7 @@ public class RequestBlockData_Test {
 
     streamBlocks.timeout();
 
-    verify(output, times(2)).newData(emptyRequest);
+    verify(output, times(1)).newData(errorRecoveryRequest);
   }
 
   @Test
@@ -182,6 +182,51 @@ public class RequestBlockData_Test {
     streamBlocks.newData(list(0x44));
 
     verify(logger).error("protocol missmatch");
+  }
+
+  @Test
+  public void a_error_recovery_request_is_sent_after_receiving_an_error() {
+    streamBlocks.start();
+    verify(output, times(1)).newData(emptyRequest);
+
+    streamBlocks.newData(list(0x80, 0x03, 0x05, 0x07, 0x03, 0x81));
+    verify(output, times(1)).newData(list(0x80, 0x01, 0x14, 0x00, 0x00, 0x81));
+
+    streamBlocks.newData(list(0x48));
+    verify(output, times(1)).newData(errorRecoveryRequest);
+  }
+
+  @Test
+  public void a_error_recovery_request_is_sent_after_receiving_invalid_data() {
+    streamBlocks.start();
+    verify(output, times(1)).newData(emptyRequest);
+
+    streamBlocks.newData(list(0x80, 0x03, 0x05, 0x07, 0x03, 0x81));
+    verify(output, times(1)).newData(list(0x80, 0x01, 0x14, 0x00, 0x00, 0x81));
+
+    streamBlocks.newData(list(0x07));
+    verify(output, times(1)).newData(errorRecoveryRequest);
+  }
+
+  @Test
+  public void a_error_recovery_request_is_sent_after_a_timeout() {
+    streamBlocks.start();
+    verify(output, times(1)).newData(emptyRequest);
+
+    streamBlocks.timeout();
+
+    verify(output, times(1)).newData(errorRecoveryRequest);
+  }
+
+  @Test
+  public void a_normal_message_is_sent_when_received_a_valid_message_after_an_error() {
+    streamBlocks.start();
+    verify(output, times(1)).newData(emptyRequest);
+    streamBlocks.timeout();
+
+    streamBlocks.newData(emptyResponse);
+
+    verify(output, times(2)).newData(emptyRequest);
   }
 
   @Test

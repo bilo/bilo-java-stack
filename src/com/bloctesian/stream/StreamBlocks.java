@@ -20,9 +20,15 @@ import com.bloctesian.TimerCallback;
 import com.bloctesian.Vector;
 import com.bloctesian.internal.BlockFactory;
 import com.bloctesian.internal.BlockRepository;
+import com.bloctesian.internal.BlockStateDistributor;
+import com.bloctesian.internal.ErrorDistributor;
 import com.bloctesian.stream.message.parser.ParserFactory;
 import com.bloctesian.stream.message.parser.PartParser;
+import com.bloctesian.stream.message.parser.ReceiveState;
+import com.bloctesian.stream.message.serializer.ErrorRecoverySerializer;
 import com.bloctesian.stream.message.serializer.MessageSerializer;
+import com.bloctesian.stream.message.serializer.Serializer;
+import com.bloctesian.stream.message.serializer.StateAwareSerializer;
 import com.bloctesian.utility.ObservableCollection;
 import com.bloctesian.utility.ObservableHashSet;
 
@@ -33,16 +39,24 @@ public class StreamBlocks implements Stream, TimerCallback {
 
   private final Block base = new Block(new BlockId(BlockType.Base10x10, new Vector(0, 0, -1), Rotation.Deg0));
   private final BlockRepository repository = new BlockRepository(new BlockFactory());
-  private final PartParser parser;
   private final MessageSerializer composer = new MessageSerializer(base, repository);
   private final Logger logger;
   private final ObservableHashSet<Block> blocks = new ObservableHashSet<>();
+  private final Serializer errorComposer = new ErrorRecoverySerializer();
+  private final ReceiveState receiveState = new ReceiveState();
+  private final StateAwareSerializer stateComposer = new StateAwareSerializer(receiveState, composer, errorComposer);
+  private final ErrorDistributor error = new ErrorDistributor();
+  private final BlockStateDistributor blockState = new BlockStateDistributor();
+  private final PartParser parser = ParserFactory.produce(blockState, error);
 
   public StreamBlocks(Stream output, Timer timer, Logger logger) {
     this.output = output;
     this.timer = timer;
     this.logger = logger;
-    parser = ParserFactory.produce(repository, new ErrorTranslater(logger));
+    error.getListener().add(receiveState);
+    error.getListener().add(new ErrorTranslater(logger));
+    blockState.getListener().add(receiveState);
+    blockState.getListener().add(repository);
   }
 
   public void start() {
@@ -87,13 +101,15 @@ public class StreamBlocks implements Stream, TimerCallback {
     }
     parser.reset();
 
+    receiveState.timeout();
+
     sendRequest();
   }
 
   private void sendRequest() {
     if (parser.isFinished()) {
       timer.setTimeout(RequestTimeoutMs, this);
-      List<Byte> data = composer.serialize();
+      List<Byte> data = stateComposer.serialize();
       output.newData(data);
       logger.debug("sent: " + hexString(data));
     }

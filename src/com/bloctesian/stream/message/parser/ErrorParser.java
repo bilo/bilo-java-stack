@@ -10,6 +10,9 @@ import static com.bloctesian.stream.message.ByteConvertion.toByte;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.bloctesian.internal.BaseError;
+import com.bloctesian.internal.ErrorListener;
+
 public class ErrorParser implements PartParser {
   final private ErrorListener errorListener;
   static final private Map<Byte, BaseError> errors = baseErrorMap();

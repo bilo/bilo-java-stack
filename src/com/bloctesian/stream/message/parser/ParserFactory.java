@@ -10,6 +10,7 @@ import java.util.List;
 
 import com.bloctesian.BlockId;
 import com.bloctesian.internal.BlockStateListener;
+import com.bloctesian.internal.ErrorListener;
 
 public class ParserFactory {
   static public PartParser produce(BlockStateListener blockListener, ErrorListener errorListener) {

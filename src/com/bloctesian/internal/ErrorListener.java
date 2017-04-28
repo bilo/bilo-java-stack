@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package com.bloctesian.stream.message.parser;
+package com.bloctesian.internal;
 
 public interface ErrorListener {
   public void error(BaseError error);

@@ -12,7 +12,7 @@ import static org.mockito.Mockito.verify;
 import org.junit.Test;
 
 import com.bloctesian.Logger;
-import com.bloctesian.stream.message.parser.BaseError;
+import com.bloctesian.internal.BaseError;
 
 public class ErrorTranslater_Test {
   private final Logger listener = mock(Logger.class);
