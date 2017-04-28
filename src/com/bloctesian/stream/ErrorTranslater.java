@@ -31,12 +31,17 @@ public class ErrorTranslater implements ErrorListener {
     case BlockBufferOverflow:
       return "to many blocks on base";
     case UartBangIdle:
+      return "received data from blocks but was not expecting";
     case UartBangLed:
+      return "received data while communicating with the blocks";
     case UartBufferOverflow:
+      return "uart buffer overflow";
     case UartLedOverflow:
+      return "base received data for unknown led (led overflow)";
     case UartUnknownData:
+      return "base received unexpected data";
     case UartUnknownLed:
-      return "protocol missmatch";
+      return "base received data for unknown led (unknown led)";
     }
 
     return "unhandled error: " + error;

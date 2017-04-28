@@ -17,6 +17,7 @@ import static org.mockito.Mockito.verify;
 import java.util.List;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.bloctesian.Block;
@@ -176,6 +177,7 @@ public class RequestBlockData_Test {
   }
 
   @Test
+  @Ignore
   public void protocol_specific_errors_are_returned() {
     streamBlocks.start();
 

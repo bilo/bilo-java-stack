@@ -18,56 +18,53 @@ public class ErrorTranslater_Test {
   private final Logger listener = mock(Logger.class);
   private final ErrorTranslater testee = new ErrorTranslater(listener);
 
-  static final private String ToManyBlocksOnBase = "to many blocks on base";
-  static final private String ProtocolMissmatch = "protocol missmatch";
-
   @Test
   public void BlockBufferOverflow_is_forwarded() {
     testee.error(BaseError.BlockBufferOverflow);
 
-    verify(listener).error(ToManyBlocksOnBase);
+    verify(listener).error("to many blocks on base");
   }
 
   @Test
   public void UartBangIdle_is_translated_to_protocoll_error() {
     testee.error(BaseError.UartBangIdle);
 
-    verify(listener).error(ProtocolMissmatch);
+    verify(listener).error("received data from blocks but was not expecting");
   }
 
   @Test
   public void UartBangLed_is_translated_to_protocoll_error() {
     testee.error(BaseError.UartBangLed);
 
-    verify(listener).error(ProtocolMissmatch);
+    verify(listener).error("received data while communicating with the blocks");
   }
 
   @Test
   public void UartBufferOverflow_is_translated_to_protocoll_error() {
     testee.error(BaseError.UartBufferOverflow);
 
-    verify(listener).error(ProtocolMissmatch);
+    verify(listener).error("uart buffer overflow");
   }
 
   @Test
   public void UartLedOverflow_is_translated_to_protocoll_error() {
     testee.error(BaseError.UartLedOverflow);
 
-    verify(listener).error(ProtocolMissmatch);
+    verify(listener).error("base received data for unknown led (led overflow)");
   }
 
   @Test
   public void UartUnknownData_is_translated_to_protocoll_error() {
     testee.error(BaseError.UartUnknownData);
 
-    verify(listener).error(ProtocolMissmatch);
+    verify(listener).error("base received unexpected data");
   }
 
   @Test
   public void UartUnknownLed_is_translated_to_protocoll_error() {
     testee.error(BaseError.UartUnknownLed);
 
-    verify(listener).error(ProtocolMissmatch);
+    verify(listener).error("base received data for unknown led (unknown led)");
   }
 
   @Test
