@@ -48,4 +48,12 @@ public class RgbLed_Test {
 
     verify(listener, never()).colorChanged(any(RgbLed.class));
   }
+
+  @Test
+  public void has_a_readable_toString_output() {
+    testee.setColor(Color.Green);
+
+    assertEquals("RgbLed{color:" + Color.Green + "}", testee.toString());
+  }
+
 }

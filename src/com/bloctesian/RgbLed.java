@@ -24,6 +24,11 @@ public class RgbLed {
     }
   }
 
+  @Override
+  public String toString() {
+    return RgbLed.class.getSimpleName() + "{color:" + color + "}";
+  }
+
   public UniqueOrderedList<RgbLedPropertyListener> listener() {
     return listeners;
   }
