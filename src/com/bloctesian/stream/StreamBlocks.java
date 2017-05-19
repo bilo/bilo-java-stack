@@ -64,11 +64,6 @@ public class StreamBlocks implements Stream, TimerCallback {
   }
 
   public void start() {
-    base.getLeds().get(0).setColor(Color.Black);
-    base.getLeds().get(1).setColor(Color.Red);
-    base.getLeds().get(2).setColor(Color.Green);
-    base.getLeds().get(3).setColor(Color.Blue);
-
     parser.reset();
     sendRequest();
   }

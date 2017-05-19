@@ -34,7 +34,7 @@ public class SetLed_Test {
   public void base_led0_is_off_led1_red_led2_green_led3_blue() {
     streamBlocks.start();
 
-    verify(output).newData(list(0x80, 0x01, 0x14, 0x81));
+    verify(output).newData(list(0x80, 0x00, 0x00, 0x81));
   }
 
   @Test
@@ -43,7 +43,7 @@ public class SetLed_Test {
 
     streamBlocks.newData(block4x2);
 
-    verify(output).newData(list(0x80, 0x01, 0x14, 0x00, 0x00, 0x81));
+    verify(output).newData(list(0x80, 0x00, 0x00, 0x00, 0x00, 0x81));
   }
 
   @Test
@@ -54,7 +54,7 @@ public class SetLed_Test {
     setColor(Color.Red);
     streamBlocks.newData(block4x2);
 
-    verify(output).newData(list(0x80, 0x01, 0x14, 0x09, 0x09, 0x81));
+    verify(output).newData(list(0x80, 0x00, 0x00, 0x09, 0x09, 0x81));
   }
 
   @Test
@@ -65,7 +65,7 @@ public class SetLed_Test {
     setColor(Color.Blue);
     streamBlocks.newData(block2x2);
 
-    verify(output).newData(list(0x80, 0x01, 0x14, 0x24, 0x81));
+    verify(output).newData(list(0x80, 0x00, 0x00, 0x24, 0x81));
   }
 
   @Test
@@ -76,7 +76,7 @@ public class SetLed_Test {
     setColor(Color.Green);
     streamBlocks.newData(block2x2_block4x2);
 
-    verify(output).newData(list(0x80, 0x01, 0x14, 0x12, 0x12, 0x12, 0x81));
+    verify(output).newData(list(0x80, 0x00, 0x00, 0x12, 0x12, 0x12, 0x81));
   }
 
   private void setColor(Color color) {

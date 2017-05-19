@@ -37,7 +37,7 @@ public class RequestBlockData_Test {
   private final Stream output = mock(Stream.class);
   private final Timer timer = mock(Timer.class);
   private final StreamBlocks streamBlocks = new StreamBlocks(output, timer, logger);
-  private final List<Byte> emptyRequest = list(0x80, 0x01, 0x14, 0x81);
+  private final List<Byte> emptyRequest = list(0x80, 0x00, 0x00, 0x81);
   private final List<Byte> errorRecoveryRequest = list(0x80, 0x81);
   private final List<Byte> emptyResponse = list(0x80, 0x81);
 
@@ -190,7 +190,7 @@ public class RequestBlockData_Test {
     verify(output, times(1)).newData(emptyRequest);
 
     streamBlocks.newData(list(0x80, 0x03, 0x05, 0x07, 0x03, 0x81));
-    verify(output, times(1)).newData(list(0x80, 0x01, 0x14, 0x00, 0x00, 0x81));
+    verify(output, times(1)).newData(list(0x80, 0x00, 0x00, 0x00, 0x00, 0x81));
 
     streamBlocks.newData(list(0x48));
     verify(output, times(1)).newData(errorRecoveryRequest);
@@ -202,7 +202,7 @@ public class RequestBlockData_Test {
     verify(output, times(1)).newData(emptyRequest);
 
     streamBlocks.newData(list(0x80, 0x03, 0x05, 0x07, 0x03, 0x81));
-    verify(output, times(1)).newData(list(0x80, 0x01, 0x14, 0x00, 0x00, 0x81));
+    verify(output, times(1)).newData(list(0x80, 0x00, 0x00, 0x00, 0x00, 0x81));
 
     streamBlocks.newData(list(0x07));
     verify(output, times(1)).newData(errorRecoveryRequest);
@@ -274,7 +274,7 @@ public class RequestBlockData_Test {
   public void log_to_debug_on_send() {
     streamBlocks.start();
 
-    verify(logger).debug("sent: 80 01 14 81");
+    verify(logger).debug("sent: 80 00 00 81");
   }
 
   @Test
@@ -285,10 +285,10 @@ public class RequestBlockData_Test {
     verify(output, times(1)).newData(emptyRequest);
 
     streamBlocks.newData(list(0x80, 0x03, 0x05, 0x07, 0x03, 0x81));
-    verify(output, times(1)).newData(list(0x80, 0x01, 0x14, 0x00, 0x00, 0x81));
+    verify(output, times(1)).newData(list(0x80, 0x00, 0x00, 0x00, 0x00, 0x81));
 
     streamBlocks.newData(list(0x80, 0x03, 0x05, 0x07, 0x03, 0x81));
-    verify(output, times(2)).newData(list(0x80, 0x01, 0x14, 0x00, 0x00, 0x81));
+    verify(output, times(2)).newData(list(0x80, 0x00, 0x00, 0x00, 0x00, 0x81));
 
     assertEquals(1, listener.items.size());
     assertEquals(block, listener.items.get(0).getId());
