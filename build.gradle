@@ -1,4 +1,22 @@
-apply plugin: 'java'
+apply plugin: 'java-library'
+apply plugin: 'maven'
+
+buildscript {
+  repositories {
+    jcenter()
+  }
+  dependencies {
+    classpath 'org.ajoberstar:grgit:1.4.+'
+  }
+}
+
+ext {
+  git = org.ajoberstar.grgit.Grgit.open()
+  gitVersion = "${git.describe()}"
+}
+
+group = "world.bilo"
+version = gitVersion
 
 sourceCompatibility = 1.7
 
@@ -41,4 +59,11 @@ task acceptanceTest(type:Test, dependsOn: assemble) {
   description = "run acceptance tests"
   testClassesDir = project.sourceSets.acceptanceTest.output.classesDir
   classpath = project.sourceSets.acceptanceTest.runtimeClasspath
+}
+
+jar {
+    manifest {
+        attributes('Implementation-Title': project.name,
+                   'Implementation-Version': project.version)
+    }
 }
