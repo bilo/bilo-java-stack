@@ -1,5 +1,5 @@
-Bilo Java Stack
-===============
+Bilo Stack
+==========
 
 This is a library to make the work with Bilo more easy.
 
