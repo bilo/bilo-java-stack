@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import com.bloctesian.utility.CollectionObserver;
+import world.bilo.stack.utility.CollectionObserver;
 
 public class CollectionObserverDummy<T> implements CollectionObserver<T> {
   public final List<T> items = new ArrayList<>();

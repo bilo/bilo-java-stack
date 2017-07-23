@@ -19,17 +19,16 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.bloctesian.Block;
-import com.bloctesian.BlockId;
-import com.bloctesian.BlockType;
-import com.bloctesian.Logger;
-import com.bloctesian.Rotation;
-import com.bloctesian.Timer;
-import com.bloctesian.Vector;
-import com.bloctesian.stream.Stream;
-import com.bloctesian.stream.StreamBlocks;
-
 import helper.CollectionObserverDummy;
+import world.bilo.stack.Block;
+import world.bilo.stack.BlockId;
+import world.bilo.stack.BlockType;
+import world.bilo.stack.Logger;
+import world.bilo.stack.Rotation;
+import world.bilo.stack.Timer;
+import world.bilo.stack.Vector;
+import world.bilo.stack.stream.Stream;
+import world.bilo.stack.stream.StreamBlocks;
 
 public class RequestBlockData_Test {
   private final CollectionObserverDummy<Block> listener = new CollectionObserverDummy<>();

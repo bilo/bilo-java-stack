@@ -5,7 +5,7 @@
 
 package helper;
 
-import static com.bloctesian.stream.message.ByteConvertion.toByte;
+import static world.bilo.stack.stream.message.ByteConvertion.toByte;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -17,11 +17,11 @@ import static org.mockito.Mockito.verify;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.bloctesian.Logger;
-import com.bloctesian.RotationListener;
-import com.bloctesian.Timer;
-import com.bloctesian.stream.Stream;
-import com.bloctesian.stream.StreamBlocks;
+import world.bilo.stack.Logger;
+import world.bilo.stack.RotationListener;
+import world.bilo.stack.Timer;
+import world.bilo.stack.stream.Stream;
+import world.bilo.stack.stream.StreamBlocks;
 
 public class Compass_Test {
   private final RotationListener listener = mock(RotationListener.class);
