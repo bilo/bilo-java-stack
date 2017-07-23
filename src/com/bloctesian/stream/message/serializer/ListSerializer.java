@@ -8,7 +8,7 @@ package com.bloctesian.stream.message.serializer;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.bloctesian.utility.functional.UnaryFunction;
+import world.bilo.util.functional.UnaryFunction;
 
 class ListSerializer<T> implements Serializer {
   private final Iterable<T> items;

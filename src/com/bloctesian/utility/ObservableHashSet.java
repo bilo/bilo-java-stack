@@ -8,7 +8,8 @@ package com.bloctesian.utility;
 import java.util.Collection;
 import java.util.HashSet;
 
-import com.bloctesian.utility.functional.Function;
+import world.bilo.util.UniqueOrderedList;
+import world.bilo.util.functional.Function;
 
 public class ObservableHashSet<T> implements ObservableCollection<T> {
   final private UniqueOrderedList<CollectionObserver<T>> listeners = new UniqueOrderedList<>();

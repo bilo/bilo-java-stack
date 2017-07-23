@@ -12,7 +12,6 @@ import java.util.List;
 import com.bloctesian.Block;
 import com.bloctesian.BlockId;
 import com.bloctesian.BlockType;
-import com.bloctesian.Color;
 import com.bloctesian.Logger;
 import com.bloctesian.Rotation;
 import com.bloctesian.RotationListener;
@@ -32,7 +31,8 @@ import com.bloctesian.stream.message.serializer.Serializer;
 import com.bloctesian.stream.message.serializer.StateAwareSerializer;
 import com.bloctesian.utility.ObservableCollection;
 import com.bloctesian.utility.ObservableHashSet;
-import com.bloctesian.utility.UniqueOrderedList;
+
+import world.bilo.util.UniqueOrderedList;
 
 public class StreamBlocks implements Stream, TimerCallback {
   static public final int RequestTimeoutMs = 1500;

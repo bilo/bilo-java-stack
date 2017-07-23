@@ -5,8 +5,8 @@
 
 package com.bloctesian;
 
-import com.bloctesian.utility.UniqueOrderedList;
-import com.bloctesian.utility.functional.Function;
+import world.bilo.util.UniqueOrderedList;
+import world.bilo.util.functional.Function;
 
 public class RgbLed {
   private final UniqueOrderedList<RgbLedPropertyListener> listeners = new UniqueOrderedList<>();

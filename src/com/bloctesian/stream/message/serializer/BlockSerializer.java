@@ -11,7 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.bloctesian.Block;
-import com.bloctesian.utility.functional.UnaryFunction;
+
+import world.bilo.util.functional.UnaryFunction;
 
 class BlockSerializer implements UnaryFunction<List<Byte>, Block> {
 

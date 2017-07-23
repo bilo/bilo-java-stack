@@ -16,7 +16,8 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.bloctesian.utility.functional.Function;
+import world.bilo.util.UniqueOrderedList;
+import world.bilo.util.functional.Function;
 
 public class UniqueOrderedList_Test {
   Object item1 = mock(Object.class);

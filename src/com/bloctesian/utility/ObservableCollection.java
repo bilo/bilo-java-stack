@@ -7,6 +7,8 @@ package com.bloctesian.utility;
 
 import java.util.Collection;
 
+import world.bilo.util.UniqueOrderedList;
+
 public interface ObservableCollection<T> {
 
   public Collection<T> items();

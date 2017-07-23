@@ -17,7 +17,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.bloctesian.utility.functional.UnaryFunction;
+import world.bilo.util.functional.UnaryFunction;
 
 public class ListSerializer_Test {
   private final Object item1 = mock(Object.class);

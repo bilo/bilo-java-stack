@@ -5,7 +5,7 @@
 
 package com.bloctesian.internal;
 
-import com.bloctesian.utility.UniqueOrderedList;
+import world.bilo.util.UniqueOrderedList;
 
 public class ErrorDistributor implements ErrorListener {
   private final UniqueOrderedList<ErrorListener> listener = new UniqueOrderedList<>();
